@@ -8,4 +8,8 @@ class Product < ActiveRecord::Base
     message: 'must be a URL for GIR, JPG or PNG image.'
   }
   
+  def self.latest
+    Product.order(:updated_at).last
+  end
+  
 end
