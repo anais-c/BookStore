@@ -41,11 +41,13 @@ class LineItemsController < ApplicationController
     #Con el 'product' que acabamos de encontrar, creamos una relación entre el objeto @cart y el 'product'. Guardamos el resultado en una variable de instancia @line_item.
     #En el modelo line_items.rb vemos que un line_item pertenece a un produco y a un cart. Aquí establecemos esa relación:
     #Un determinado producto genera uno de los tantos line_items que pertenecen al cart. Ese line_item lo guardamos en la variable @line_item.
-    @line_item = @cart.line_items.build(product: product)
+    #En el modelo Cart.rb hemos creado un método 'add_product(product_id)', por lo que substituimos @cart.line_items.build(product: product) por @cart.add_product(product.id)
+    @line_item = @cart.add_product(product.id)
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully created.' }
+        format.html { redirect_to store_url }
+        format.js { @current_item = @line_item}
         format.json { render json: @line_item, status: :created, location: @line_item }
       else
         format.html { render action :new }
