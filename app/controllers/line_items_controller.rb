@@ -1,4 +1,6 @@
 class LineItemsController < ApplicationController
+  #list of methods or controllers for wich authorization is not required  
+  skip_before_action :authorize, only: :create  
   
   #Include CurrentCart module
   include CurrentCart
